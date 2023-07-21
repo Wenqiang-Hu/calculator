@@ -33,7 +33,7 @@ class Calculator extends Component {
                     <DigitButton digit={"3"}/>
                     <button>+</button>
                     <DigitButton digit={"0"}/>
-                    <DigitButton digit={"."}/>
+                    <DigitButton digit={'.'}/>
                     <button className="btn-equal">=</button>
                 </div>
             </Base>
