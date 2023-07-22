@@ -3,6 +3,7 @@ import Base from "./base";
 import { connect } from "react-redux";
 import DigitButton from "./calculator/digitButton";
 import ACTIONS from "../redux/actions";
+import OperationButton from "./calculator/operationButton";
 
 class Calculator extends Component {
     state = {};
@@ -20,19 +21,19 @@ class Calculator extends Component {
                     </div>
                     <button className="btn-ac">AC</button>
                     <button onClick={() => this.props.delete()}>Del</button>
-                    <button>/</button>
+                    <OperationButton operation={"/"}/>
                     <DigitButton digit={"7"}/>
                     <DigitButton digit={"8"}/>
                     <DigitButton digit={"9"}/>
-                    <button>*</button>
+                    <OperationButton operation={"*"}/>
                     <DigitButton digit={"4"}/>
                     <DigitButton digit={"5"}/>
                     <DigitButton digit={"6"}/>
-                    <button>-</button>
+                    <OperationButton operation={"-"}/>
                     <DigitButton digit={"1"}/>
                     <DigitButton digit={"2"}/>
                     <DigitButton digit={"3"}/>
-                    <button>+</button>
+                    <OperationButton operation={"+"}/>
                     <DigitButton digit={"0"}/>
                     <DigitButton digit={'.'}/>
                     <button className="btn-equal">=</button>

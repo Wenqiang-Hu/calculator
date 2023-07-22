@@ -1,5 +1,32 @@
 import ACTIONS from "./actions";
 
+const evaluate = state => {
+    let {currentOperand, lastOperand, operation} = state;
+
+    const current = parseFloat(currentOperand);
+    const last = parseFloat(lastOperand);
+
+    let res = "";
+    switch (operation) {
+        case "+":
+            res = last + current
+            break;
+        case "-":
+            res = last - current
+            break;
+        case "*":
+            res = last * current
+            break;
+        case "/":
+            res = last / current
+            break;
+        default:
+            break;
+    }
+    return res.toString()
+
+}
+
 const reducer = (
     state = { currentOperand: "", lastOperand: "", operation: "" },
     action
@@ -34,6 +61,28 @@ const reducer = (
             return {
                 ...state,
                 currentOperand: state.currentOperand.slice(0, -1)
+            }
+        case ACTIONS.CHOOST_OPERATION:
+            if (state.currentOperand === "" && state.lastOperand === ""){
+                return state 
+            }
+            if (state.lastOperand === "")
+                return {
+                    ...state,
+                    lastOperand: state.currentOperand,
+                    operation: action.operand,
+                    currentOperand: "",
+                }
+            if (state.currentOperand === "")
+                return {
+                    ...state,
+                    operation: action.operand,
+                }
+            return {
+                ...state,
+                lastOperand: evaluate(state),
+                operation: action.operand,
+                currentOperand: "",
             }
         default:
             return state
