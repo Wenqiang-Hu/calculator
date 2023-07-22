@@ -28,12 +28,18 @@ const evaluate = state => {
 }
 
 const reducer = (
-    state = { currentOperand: "", lastOperand: "", operation: "" },
+    state = { currentOperand: "", lastOperand: "", operation: "", overwrite: false },
     action
 ) => {
     switch (action.type) {
         case ACTIONS.ADD_DIGIT:
-            
+            if (state.overwrite)
+                return {
+                    ...state,
+                    currentOperand: action.digit,
+                    overwrite: false
+                }
+
             if (state.currentOperand === '0' && action.digit === '0')
                 return state;
             if (state.currentOperand === '0' && action.digit !== '.')
@@ -56,6 +62,13 @@ const reducer = (
                 currentOperand: state.currentOperand + action.digit,
             }
         case ACTIONS.DELETE_DIGIT:
+            if (state.overwrite)
+                return {
+                    ...state,
+                    currentOperand: "",
+                    overwrite: false,
+                }
+
             if (state.currentOperand === "")
                 return state;
             return {
@@ -91,6 +104,19 @@ const reducer = (
                 lastOperand: "",
                 operation: "",
             }
+        case ACTIONS.EVALUATE:
+            if (state.currentOperand === "" || 
+                state.lastOperand === "" || 
+                state.operation === "")
+                return state;
+            return {
+                ...state,
+                currentOperand: evaluate(state),
+                lastOperand: "",
+                operation: "",
+                overwrite: true,
+            }
+    
         default:
             return state
     }
